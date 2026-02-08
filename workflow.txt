@@ -1,0 +1,15 @@
+PROJECT: Online Quiz Portal - Group Milestone 1
+------------------------------------------------------------------
+
+=== WORKFLOW 1: TEACHER (Quiz Creation) ===
+[This section is currently empty. To be filled in branch feature/teacher-creation]
+
+------------------------------------------------------------------
+
+=== WORKFLOW 2: STUDENT (Quiz Attempt) ===
+[This section is currently empty. To be filled in branch feature/student-attempt]
+
+------------------------------------------------------------------
+
+=== WORKFLOW 3: TEACHER (Analytics & Grading) ===
+[This section is currently empty. To be filled in branch feature/teacher-analytics]
