@@ -7,8 +7,16 @@ PROJECT: Online Quiz Portal - Group Milestone 1
 ------------------------------------------------------------------
 
 === WORKFLOW 2: STUDENT (Quiz Attempt) ===
-[This section is currently empty. To be filled in branch feature/student-attempt]
 
+Role: Student
+Goal: Attempt the assigned quiz securely.
+Key Features: Real-time Timer, Auto-save, Instant Submission.
+Steps:
+1. Student logs in and sees the "Upcoming Quizzes" list posted by the Teacher.
+2. Clicks "Start Quiz" (System verifies if the current time is within the allowed window).
+3. Answers questions one by one; the system auto-saves progress to prevent data loss.
+4. Monitors the countdown timer displayed at the top of the screen.
+5. Clicks "Submit" to finish the attempt (or system auto-submits when time expires).
 ------------------------------------------------------------------
 
 === WORKFLOW 3: TEACHER (Analytics & Grading) ===
