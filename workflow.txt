@@ -2,8 +2,16 @@ PROJECT: Online Quiz Portal - Group Milestone 1
 ------------------------------------------------------------------
 
 === WORKFLOW 1: TEACHER (Quiz Creation) ===
-[This section is currently empty. To be filled in branch feature/teacher-creation]
 
+Role: Teacher
+Goal: Design and publish assessments for students.
+Key Features: Question Bank, Timer Settings, Difficulty Levels.
+Steps:
+1. Teacher logs in and clicks "Create New Quiz" on the dashboard.
+2. Enters quiz details: Title, Description, Duration (e.g., 30 mins), and Total Marks.
+3. Selects "Add Question" to input text, multiple-choice options, and mark the correct answer.
+4. Configures availability settings (e.g., Randomization of questions).
+5. Clicks "Publish" to make the quiz visible to enrolled students.
 ------------------------------------------------------------------
 
 === WORKFLOW 2: STUDENT (Quiz Attempt) ===
