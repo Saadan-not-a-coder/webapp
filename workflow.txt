@@ -28,4 +28,13 @@ Steps:
 ------------------------------------------------------------------
 
 === WORKFLOW 3: TEACHER (Analytics & Grading) ===
-[This section is currently empty. To be filled in branch feature/teacher-analytics]
+
+Role: Teacher
+Goal: Monitor student performance and finalize grades.
+Key Features: Gradebook, CSV Export, Performance Graphs.
+Steps:
+1. Teacher navigates to the "Results" tab after the quiz deadline has passed.
+2. Views the "Class Performance" graph (Average Score, Highest Score, Failure Rate).
+3. Clicks on a specific student's name to review their individual answers.
+4. Manually adjusts marks if necessary (e.g., for disputed questions).
+5. Clicks "Export Grades" to download the final results as a CSV file.
