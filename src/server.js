@@ -3,12 +3,14 @@ const app = express();
 
 // Import your routes
 const quizRoutes = require('./routes/quizRoutes');
+const attemptRoutes = require('./routes/attemptRoutes'); // NEW: Import attempt routes
 
 // Middleware to parse incoming JSON requests
 app.use(express.json());
 
-// Mount the routes to the /api/quizzes URL
+// Mount the routes
 app.use('/api/quizzes', quizRoutes);
+app.use('/api/attempts', attemptRoutes); // NEW: Mount attempt routes
 
 // A simple test route
 app.get('/', (req, res) => {
