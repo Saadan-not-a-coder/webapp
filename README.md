@@ -1,5 +1,8 @@
 # Online Quiz Portal - Backend API
 
+**Group Members:**
+* Saadan Ashraf (s.ashraf.29223@khi.iba.edu.pk)
+
 This is the backend implementation for the Online Quiz Portal, built with Express.js, Prisma, and PostgreSQL.
 
 ## Setup and Installation
