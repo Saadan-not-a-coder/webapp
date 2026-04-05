@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const resultController = require('../controllers/resultController');
+const { verifyToken, isTeacher } = require('../middleware/auth');
 
-// Map HTTP methods to the grading controller
-router.post('/', resultController.createResult);                   // Submit a grade
-router.get('/quiz/:quizId', resultController.getResultsByQuiz);    // Get all grades for a specific quiz
-router.get('/:id', resultController.getResultById);                // Get a specific grade record
-router.put('/:id', resultController.updateResult);                 // Adjust a grade
-router.delete('/:id', resultController.deleteResult);              // Delete a grade
+// Only logged-in teachers can submit or modify grades
+router.post('/', verifyToken, isTeacher, resultController.createResult);
+router.get('/quiz/:quizId', verifyToken, isTeacher, resultController.getResultsByQuiz);
+router.get('/:id', verifyToken, resultController.getResultById);
+router.put('/:id', verifyToken, isTeacher, resultController.updateResult);
+router.delete('/:id', verifyToken, isTeacher, resultController.deleteResult);
 
 module.exports = router;

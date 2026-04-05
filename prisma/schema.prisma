@@ -11,6 +11,7 @@ datasource db {
 model User {
   id        Int       @id @default(autoincrement())
   email     String    @unique
+  password  String    // NEW: Added for authentication
   role      Role      @default(STUDENT)
   quizzes   Quiz[]    // Teacher's created quizzes
   attempts  Attempt[] // Student's attempts

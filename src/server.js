@@ -1,25 +1,24 @@
 const express = require('express');
 const app = express();
 
-// Import your routes
+// Import routes
+const authRoutes = require('./routes/authRoutes'); // NEW
 const quizRoutes = require('./routes/quizRoutes');
 const attemptRoutes = require('./routes/attemptRoutes');
-const resultRoutes = require('./routes/resultRoutes'); // NEW: Import result routes
+const resultRoutes = require('./routes/resultRoutes');
 
-// Middleware to parse incoming JSON requests
 app.use(express.json());
 
-// Mount the routes
+// Mount routes
+app.use('/api/auth', authRoutes); // NEW: Auth routes mounted
 app.use('/api/quizzes', quizRoutes);
 app.use('/api/attempts', attemptRoutes);
-app.use('/api/results', resultRoutes); // NEW: Mount result routes
+app.use('/api/results', resultRoutes);
 
-// A simple test route
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'Online Quiz Portal API is running!' });
 });
 
-// Define the port and start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
