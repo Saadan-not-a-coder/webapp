@@ -3,10 +3,16 @@ const quizService = require('../services/quizService');
 // 1. Create Quiz
 const createQuiz = async (req, res) => {
     try {
-        // req.body contains the JSON sent by the client
-        const newQuiz = await quizService.createQuiz(req.body);
+        // Change teacherId to creatorId to match the Prisma schema
+        const quizData = {
+            ...req.body,
+            creatorId: req.user.userId 
+        };
+
+        const newQuiz = await quizService.createQuiz(quizData);
         res.status(201).json({ success: true, data: newQuiz });
     } catch (error) {
+        console.error("Quiz Creation Error:", error);
         res.status(500).json({ success: false, message: "Failed to create quiz", error: error.message });
     }
 };

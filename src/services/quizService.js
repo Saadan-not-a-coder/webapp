@@ -1,7 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-// 1. Create a new Quiz (with optional nested questions)
 const createQuiz = async (quizData) => {
     return await prisma.quiz.create({
         data: {
@@ -9,12 +8,20 @@ const createQuiz = async (quizData) => {
             description: quizData.description,
             duration: quizData.duration,
             totalMarks: quizData.totalMarks,
-            creatorId: quizData.creatorId,
+            creatorId: quizData.creatorId, // Change this from teacherId to creatorId!
+            isPublished: false, 
             questions: {
-                create: quizData.questions // Allows creating questions at the same time
+                create: quizData.questions.map(q => ({
+                    text: q.text,
+                    points: q.points,
+                    options: q.options,
+                    correctAnswer: q.correctAnswer
+                }))
             }
         },
-        include: { questions: true } // Return the created questions in the response
+        include: {
+            questions: true
+        }
     });
 };
 

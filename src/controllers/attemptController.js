@@ -3,9 +3,16 @@ const attemptService = require('../services/attemptService');
 // 1. Start Attempt
 const startAttempt = async (req, res) => {
     try {
-        const newAttempt = await attemptService.startAttempt(req.body);
+        // We securely inject the studentId using the JWT token (req.user)
+        const attemptData = {
+            ...req.body,
+            studentId: req.user.userId 
+        };
+
+        const newAttempt = await attemptService.startAttempt(attemptData);
         res.status(201).json({ success: true, data: newAttempt });
     } catch (error) {
+        console.error("Start Attempt Error:", error); // Added for easier debugging
         res.status(500).json({ success: false, message: "Failed to start attempt", error: error.message });
     }
 };
