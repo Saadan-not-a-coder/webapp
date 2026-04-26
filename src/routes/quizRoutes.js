@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { fetchAnalytics } = require('../controllers/quizController');
 const quizController = require('../controllers/quizController');
 const { verifyToken, isTeacher } = require('../middleware/auth');
 
@@ -9,5 +10,5 @@ router.get('/', verifyToken, quizController.getAllQuizzes);                   //
 router.get('/:id', verifyToken, quizController.getQuizById);                  // Read One (Both can view)
 router.put('/:id', verifyToken, isTeacher, quizController.updateQuiz);        // Update
 router.delete('/:id', verifyToken, isTeacher, quizController.deleteQuiz);     // Delete
-
+router.get('/:id/analytics', fetchAnalytics);
 module.exports = router;

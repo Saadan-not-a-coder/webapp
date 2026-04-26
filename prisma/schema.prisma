@@ -9,13 +9,13 @@ datasource db {
 
 // Core User model
 model User {
-  id        Int       @id @default(autoincrement())
-  email     String    @unique
-  password  String    // NEW: Added for authentication
-  role      Role      @default(STUDENT)
-  quizzes   Quiz[]    // Teacher's created quizzes
-  attempts  Attempt[] // Student's attempts
-  results   Result[]  // Teacher's graded results
+  id       Int       @id @default(autoincrement())
+  email    String    @unique
+  password String    
+  role     Role      @default(STUDENT)
+  quizzes  Quiz[]    
+  attempts Attempt[] 
+  results  Result[]  
 }
 
 enum Role {
@@ -23,30 +23,51 @@ enum Role {
   TEACHER
 }
 
+// NEW: For Workflow 1
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
 // === WORKFLOW 1: TEACHER (Quiz Creation) ===
 model Quiz {
-  id          Int        @id @default(autoincrement())
-  title       String
-  description String?
-  duration    Int        // Stored in minutes
-  totalMarks  Int
-  isPublished Boolean    @default(false)
-  creatorId   Int
-  creator     User       @relation(fields: [creatorId], references: [id])
-  questions   Question[]
-  attempts    Attempt[]
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  id           Int        @id @default(autoincrement())
+  title        String
+  description  String?
+  duration     Int        
+  totalMarks   Int
+  isPublished  Boolean    @default(false)
+  
+  // NEW: Workflow 1 & Kahoot Requirements
+  isRandomized Boolean    @default(false)
+  isKahootMode Boolean    @default(false)
+  openTime     DateTime?  // Specific Time Windows
+  closeTime    DateTime?  
+  passingScore Float?     // Required to calculate "Failure Rate"
+  
+  creatorId    Int
+  creator      User       @relation(fields: [creatorId], references: [id])
+  questions    Question[]
+  attempts     Attempt[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
 }
 
 model Question {
-  id            Int      @id @default(autoincrement())
+  id            Int        @id @default(autoincrement())
   text          String
-  options       String[] // Array of multiple choice options
+  options       String[] 
   correctAnswer String
-  points        Int      @default(1)
-  quizId        Int
-  quiz          Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  points        Int        @default(1)
+  difficulty    Difficulty @default(MEDIUM)
+  isBank        Boolean    @default(false)
+  
+  // NEW: Per-question timer for Kahoot mode
+  timeLimit     Int        @default(30) 
+  
+  quizId        Int?       
+  quiz          Quiz?      @relation(fields: [quizId], references: [id], onDelete: Cascade)
 }
 
 // === WORKFLOW 2: STUDENT (Quiz Attempt) ===
@@ -59,7 +80,7 @@ model Attempt {
   answers   Answer[]
   result    Result?
   startTime DateTime @default(now())
-  status    String   @default("IN_PROGRESS") // e.g., IN_PROGRESS, SUBMITTED
+  status    String   @default("IN_PROGRESS") 
 }
 
 model Answer {
@@ -67,16 +88,24 @@ model Answer {
   attemptId    Int
   attempt      Attempt  @relation(fields: [attemptId], references: [id], onDelete: Cascade)
   questionId   Int
-  selectedText String   // The student's chosen answer
+  selectedText String   
+  
+  // NEW: Analytics & Kahoot Requirements
+  isCorrect    Boolean? // Makes it easier for teachers to review individual answers
+  timeTaken    Int?     // Tracks how fast they answered for Kahoot mode scoring
 }
 
 // === WORKFLOW 3: TEACHER (Analytics & Grading) ===
 model Result {
-  id         Int      @id @default(autoincrement())
-  attemptId  Int      @unique
-  attempt    Attempt  @relation(fields: [attemptId], references: [id], onDelete: Cascade)
-  score      Float
-  gradedById Int?
-  gradedBy   User?    @relation(fields: [gradedById], references: [id])
-  gradedAt   DateTime @default(now())
+  id               Int      @id @default(autoincrement())
+  attemptId        Int      @unique
+  attempt          Attempt  @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  score            Float
+  
+  // NEW: Workflow 3 Requirement
+  manualScore      Float?   // Stores the Teacher's manual mark adjustment
+  
+  gradedById       Int?
+  gradedBy         User?    @relation(fields: [gradedById], references: [id])
+  gradedAt         DateTime @default(now())
 }

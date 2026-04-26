@@ -8,14 +8,27 @@ const createQuiz = async (quizData) => {
             description: quizData.description,
             duration: quizData.duration,
             totalMarks: quizData.totalMarks,
-            creatorId: quizData.creatorId, // Change this from teacherId to creatorId!
+            creatorId: quizData.creatorId,
             isPublished: false, 
+            
+            // NEW: Milestone 1 & Kahoot Settings
+            isRandomized: quizData.isRandomized || false,
+            isKahootMode: quizData.isKahootMode || false,
+            openTime: quizData.openTime ? new Date(quizData.openTime) : null,
+            closeTime: quizData.closeTime ? new Date(quizData.closeTime) : null,
+            passingScore: quizData.passingScore || null,
+            
             questions: {
                 create: quizData.questions.map(q => ({
                     text: q.text,
                     points: q.points,
                     options: q.options,
-                    correctAnswer: q.correctAnswer
+                    correctAnswer: q.correctAnswer,
+                    
+                    // NEW: Question Bank & Difficulty
+                    difficulty: q.difficulty || 'MEDIUM',
+                    isBank: q.isBank || false,   // <--- HERE IS THE FIXED COMMA
+                    timeLimit: q.timeLimit || 30 // NEW: Save the time limit
                 }))
             }
         },
@@ -55,10 +68,45 @@ const deleteQuiz = async (quizId) => {
     });
 };
 
+const getQuizAnalytics = async (quizId) => {
+    const quiz = await prisma.quiz.findUnique({
+        where: { id: parseInt(quizId) }
+    });
+    
+    if (!quiz) throw new Error("Quiz not found");
+
+    // Fetch all results for this specific quiz, including the student's email
+    const results = await prisma.result.findMany({
+        where: { attempt: { quizId: parseInt(quizId) } },
+        include: {
+            attempt: { include: { student: true } }
+        }
+    });
+
+    const totalAttempts = results.length;
+    let averageScore = 0;
+    let highestScore = 0;
+
+    if (totalAttempts > 0) {
+        const totalScore = results.reduce((sum, current) => sum + current.score, 0);
+        averageScore = totalScore / totalAttempts;
+        highestScore = Math.max(...results.map(r => r.score));
+    }
+
+    return {
+        quiz,
+        results,
+        totalAttempts,
+        averageScore,
+        highestScore
+    };
+};
+
 module.exports = {
     createQuiz,
     getAllQuizzes,
     getQuizById,
     updateQuiz,
-    deleteQuiz
+    deleteQuiz,
+    getQuizAnalytics
 };

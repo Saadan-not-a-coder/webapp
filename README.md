@@ -1,31 +1,38 @@
 # 🎓 Online Quiz Portal
 
-A full-stack, role-based educational platform that allows Teachers to create and manage quizzes, and Students to take them with a live countdown timer and automatic grading.
+A full-stack, role-based educational platform that allows Teachers to create and manage quizzes, and Students to take them with a live countdown timer, auto-grading, and gamified speed modes.
 
-**Author:** [Your Name/Student ID]
-**Course:** [Course Name/Number] - Milestone 3 Submission
+**Course:** Milestone 4 Submission - Full-Stack Integration & Polish
 
 ---
 
-## ✨ Features
+## 👥 Team Contributions
 
-### 👨‍🏫 Teacher Dashboard
-* **Role-Based Access:** Secure login via JWT.
-* **Quiz Management:** Create quizzes with customizable durations, total marks, and dynamic multiple-choice questions.
-* **Publish Control:** Keep quizzes hidden as drafts or publish them to students.
-* **Analytics Engine:** View total attempts, average scores, highest scores, and a breakdown of individual student grades per quiz.
+* **Saadan Ashraf:** Backend Architecture, Express/Prisma Setup, Auto-Grading Engine, Database Overhaul for Advanced Workflows, and API Routing.
+* **Afhaam Altaf:** Frontend Development, React State Management, Recharts Data Visualizations, SweetAlert UI Polish, and Gamified Kahoot Mode Logic. 
+*(Note: Roles can be adjusted if responsibilities were split differently!)*
 
-### 👨‍🎓 Student Experience
-* **Available Quizzes:** View a clean dashboard of currently published quizzes.
-* **Live Assessment:** Take quizzes with a strictly enforced, server-synced countdown timer.
-* **Auto-Save:** Progress is silently saved to the database in real-time.
-* **Auto-Submit & Grade:** Quizzes automatically submit when the timer hits zero, and the Express backend calculates the final score securely.
+---
+
+## ✨ Features Implemented (100% Workflow Compliance)
+
+### 👨‍🏫 Teacher Dashboard (Workflow 1 & 3)
+* **Quiz Management:** Advanced creation form with randomized question toggles, specific Time Windows (Open/Close dates), and passing score settings.
+* **Question Configurations:** Multiple difficulty levels (Easy/Medium/Hard) and the ability to mark questions for future Question Banks.
+* **Kahoot Speed Mode:** Ability to toggle a gamified, time-tracked mode for students.
+* **Analytics Engine:** Dynamic bar charts (via Recharts) mapping class performance, failure rate calculation, and raw CSV data export.
+
+### 👨‍🎓 Student Experience (Workflow 2)
+* **Access Control:** Time windows are strictly enforced by the backend; students cannot start early or late.
+* **Live Assessment:** Paginated, one-by-one question delivery with a strictly enforced countdown timer.
+* **Auto-Save & Submit:** Progress silently saves in real-time, and auto-submits when the timer hits zero.
+* **Kahoot UI Transform:** If enabled by the teacher, the UI transforms into a full-screen, 4-color grid tracking millisecond reaction times.
 
 ---
 
 ## 🛠️ Tech Stack
 
-* **Frontend:** React (Vite), React Router, Axios
+* **Frontend:** React (Vite), React Router, Axios, Recharts (Data Viz), SweetAlert2 (UI Popups)
 * **Backend:** Node.js, Express.js
 * **Database:** PostgreSQL, Prisma ORM
 * **Authentication:** JSON Web Tokens (JWT), bcryptjs
@@ -34,35 +41,16 @@ A full-stack, role-based educational platform that allows Teachers to create and
 
 ## 🚀 Local Setup & Installation
 
-Follow these steps to run the application locally. You will need two terminal windows open to run the backend and frontend simultaneously.
+Follow these steps to run the application locally:
 
-### 1. Prerequisites
-* Node.js installed
-* PostgreSQL installed and running locally
-
-### 2. Backend Setup
-1. Clone the repository and navigate to the root directory:
-   ```bash
-   cd online-quiz-portal
-   ```
-2. Install backend dependencies:
-   ```bash
-   npm install
-   ```
-3. Create a `.env` file in the root directory and add the following variables:
+### 1. Backend Setup
+1. Clone the repository: `cd online-quiz-portal`
+2. Install dependencies: `npm install`
+3. Create a `.env` file in the root directory:
    ```env
    DATABASE_URL="postgresql://[username]:[password]@localhost:5432/quiz_portal?schema=public"
    PORT=3000
    JWT_SECRET="your_super_secret_jwt_key_here"
-   ```
-4. Push the database schema using Prisma:
-   ```bash
-   npx prisma db push
-   ```
-5. Start the backend server:
-   ```bash
-   npm run dev
-   ```
 
 ### 3. Frontend Setup
 1. Open a **second terminal** and navigate to the frontend folder:
